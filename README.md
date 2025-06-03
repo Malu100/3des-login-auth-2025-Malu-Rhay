@@ -74,4 +74,5 @@ npm install
 node app.js
 
 
-<br>![Diagrama de Atividades](./docs/Uml.jpg) 
+### Diagrama de Atividades
+<br>![Diagrama de Atividades](./docs/Uml.jpg)
