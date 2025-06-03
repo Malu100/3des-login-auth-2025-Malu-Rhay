@@ -72,3 +72,6 @@ npm install
 
 # Iniciar o servidor
 node app.js
+
+
+<br>![Diagrama de Atividades](./Uml.jpg) 
