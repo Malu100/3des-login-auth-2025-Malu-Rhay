@@ -14,7 +14,16 @@ Este projeto é uma API RESTful desenvolvida em Node.js para gerenciar o cadastr
 
 ## 📁 Estrutura do Projeto
 
-<pre><code> ``` aula10/ ├── controllers/ │ └── alunoController.js ├── models/ │ └── alunoModel.js ├── routes/ │ └── alunoRoutes.js ├── app.js ├── package.json └── README.md ``` </code></pre>
+<pre><code> ``` aula10/
+├── controllers/
+│ └── alunoController.js
+├── models/
+│ └── alunoModel.js
+├── routes/
+│ └── alunoRoutes.js
+├── app.js
+├── package.json
+└── README.md ``` </code></pre>
 
 
 - `controllers/`: Lógica das funcionalidades (criar, listar, editar, deletar alunos)
