@@ -8,69 +8,136 @@ Estrutura de autenticação para o projeto **Login**.
 - Documentar descrição do funcionamento utilizando **UML DA(Diagrama de Atividades)**.
 
 
-# 📚 API de Gerenciamento de Alunos
+# 🧠 API de Autenticação e Posts
 
-Este projeto é uma API RESTful desenvolvida em Node.js para gerenciar o cadastro de alunos. Ela permite realizar operações de CRUD (Create, Read, Update, Delete) utilizando MongoDB como banco de dados.
+Este projeto é uma API simples feita com **Node.js** e **Express**, que possui autenticação JWT e uma rota protegida para exibir posts. O projeto foi testado via **Insomnia** e está funcionando corretamente.
+
+---
 
 ## 📁 Estrutura do Projeto
 
-<pre><code> ``` aula10/
-├── controllers/
-│ └── alunoController.js
-├── models/
-│ └── alunoModel.js
-├── routes/
-│ └── alunoRoutes.js
-├── app.js
+├── node_modules/
+
+├── src/
+
+│ ├── controllers/
+
+│ │ ├── login.js
+
+│ │ └── posts.js
+
+│ ├── data/
+
+│ │ └── posts.js
+
+│ ├── middlewares/
+
+│ │ └── auth.js
+
+│ └── routes/
+
+│   ├── login.js
+
+│   └── posts.js
+
+├── .env
+
+├── package-lock.json
+
 ├── package.json
-└── README.md ``` </code></pre>
 
-
-- `controllers/`: Lógica das funcionalidades (criar, listar, editar, deletar alunos)
-- `models/`: Modelos dos dados com Mongoose (definição de como o aluno é salvo)
-- `routes/`: Endpoints da API
-- `app.js`: Configuração do servidor e middlewares
-- `package.json`: Dependências e scripts do projeto
+└── server.js
 
 ---
 
 ## 📦 Bibliotecas Utilizadas
 
-| Biblioteca     | Descrição |
-|----------------|-----------|
-| **express**    | Framework para criar rotas e middlewares no Node.js |
-| **mongoose**   | ODM para MongoDB, facilita interação com banco de dados |
-| **body-parser**| Middleware para ler o corpo das requisições HTTP |
+| Biblioteca       | Descrição |
+|------------------|-----------|
+| `express`        | Framework web para criar rotas HTTP |
+| `jsonwebtoken`   | Utilizado para gerar e validar tokens JWT |
+| `dotenv`         | Carrega variáveis de ambiente a partir do `.env` |
+| `crypto` (nativo)| Usado para gerar ID aleatório no token |
 
 ---
 
-## 🌐 Rotas da API
+## 🔐 Autenticação JWT
 
-| Método | Rota             | Descrição                                 |
-|--------|------------------|-------------------------------------------|
-| GET    | `/alunos`        | Lista todos os alunos                     |
-| GET    | `/alunos/:id`    | Busca um aluno específico por ID          |
-| POST   | `/alunos`        | Cria um novo aluno                        |
-| PUT    | `/alunos/:id`    | Atualiza os dados de um aluno             |
-| DELETE | `/alunos/:id`    | Remove um aluno do banco de dados         |
+- A rota `/login` gera um token válido por 2 minutos.
+- A rota `/posts` é protegida por middleware e exige token válido via header:
+
+Authorization: Bearer <token>
 
 ---
 
-## 🔄 Diagrama de Atividades (UML)
+## 🔐 Autenticação JWT
+- A rota **/login** gera um token JWT válido por 2 minutos.
 
-Abaixo está o Diagrama de Atividades que representa o funcionamento da API:
+- A rota **/posts** é protegida: só pode ser acessada se o token válido for enviado no cabeçalho:
 
-![Diagrama de Atividades - API Alunos](./caminho/para/imagem.png) <!-- Substitua esse caminho após a geração da imagem -->
+```
+Authorization: Bearer <token>
+```
+
+## 🔁 Rotas da API
+### 📨 POST /login
+- Descrição: Autentica um usuário fixo e retorna um token JWT.
+
+- Requisição (Body JSON):
+```
+{
+  "user": "usuario@gmail.com",
+  "psw": "a1b2@b3c4"
+}
+```
+- Resposta (200 OK):
+```
+{
+  "token": "<JWT gerado>"
+}
+```
+🔒 GET /posts
+- Descrição: Retorna uma lista de posts.
+ - ⚠️ Necessita token válido no header.
+
+- Cabeçalho (Header):
+
+```
+Authorization: Bearer <token>
+```
+- Resposta (200 OK):
+```
+[
+  {
+    "id": 1,
+    "title": "Como ser mais produtivo em 2025",
+    "summary": "Dicas práticas para organizar sua rotina e alcançar mais resultados.",
+    "date": "2025-05-10",
+    "views": 1243,
+    "likes": 210
+  },
+  ...
+]
+```
+
+### ✅ Testes realizados (via Insomnia)
+- ✔️ Login com credenciais corretas gera token válido
+
+- ✔️ Token válido acessa rota protegida /posts
+
+- ❌ Sem token ou token expirado bloqueia acesso
 
 ---
 
-## 🚀 Como executar
+## Diagrama
 
-```bash
-# Instalar dependências
-npm install
-
-# Iniciar o servidor
-node app.js
+![Diagrama](./diagrama.png)
 
 
+### Integrantes do grupo:
+
+- Hélio Alves de Oliveira
+
+- Diego Maradona Preti Costa Figuerêdo
+
+- Arthur Souza de Oliveira
