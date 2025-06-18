@@ -136,8 +136,7 @@ Authorization: Bearer <token>
 
 ### Integrantes do grupo:
 
-- Hélio Alves de Oliveira
+- Maria Luiza
 
-- Diego Maradona Preti Costa Figuerêdo
+- Rhayssa Maria
 
-- Arthur Souza de Oliveira
